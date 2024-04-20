@@ -17,8 +17,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Register from '../../features/Auth/components/Register';
 import { IconButton } from '@mui/material';
-import { Close } from '@mui/icons-material';
+import { AccountCircle, Close } from '@mui/icons-material';
 import Login from '../../features/Auth/components/Login';
+import { useDispatch, useSelector } from 'react-redux';
+
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { logout } from '../../features/Auth/userSlice';
 
 const MODE = {
     LOGIN: 'login',
@@ -26,15 +31,32 @@ const MODE = {
 }
 
 export default function Header() {
-
+    const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
-
     const [mode, setMode] = useState(MODE.LOGIN);
+    const loggedInUser = useSelector(state => state.user.current);
+    const isLoggedIn = !!loggedInUser.id;
 
+    // menu
+    const [anchorEl, setAnchorEl] = useState(null);
+    const openMenu = Boolean(anchorEl);
+    const handleMenuClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+    const handleLogoutClick = () => {
+        const action = logout();
+        dispatch(action);
+        setAnchorEl(null);
+    };
+
+    // dialog click
     const handleClickOpen = () => {
         setOpen(true);
     };
-
+    // dialog close
     const handleClose = () => {
         setOpen(false);
     };
@@ -42,15 +64,43 @@ export default function Header() {
     return (
         <div>
             <Box sx={{flexGrow: 1}}>
-            <AppBar position="static">
-                <Toolbar>
-                <CodeIcon sx={{marginRight: 0.5}} />
-                <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                    Something new
-                </Typography>
-                <Button color="inherit" onClick={handleClickOpen}>Register</Button>
-                </Toolbar>
-            </AppBar>
+                <AppBar position="static">
+                    <Toolbar>
+                        <CodeIcon sx={{marginRight: 0.5}} />
+                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                            Something new
+                        </Typography>
+                        {!isLoggedIn && (
+                            <Button color="inherit" onClick={handleClickOpen}>Login</Button>
+                        )}
+                        {isLoggedIn && (
+                            <IconButton color="inherit" onClick={handleMenuClick}>
+                                <AccountCircle />
+                            </IconButton>
+                        )}
+                    </Toolbar>
+                </AppBar>
+
+                <Menu
+                    id="demo-positioned-menu"
+                    aria-labelledby="demo-positioned-button"
+                    anchorEl={anchorEl}
+                    open={openMenu}
+                    onClose={handleMenuClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                      }}
+                    transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                    }}
+                >
+                    <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+                    <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+                    <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
+                </Menu>
+
             </Box>
 
             <Dialog
