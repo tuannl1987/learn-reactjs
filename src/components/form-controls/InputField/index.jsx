@@ -14,8 +14,6 @@ InputField.propTypes = {
 
 function InputField(props) {
     const {form, name, label, disabled} = props;
-    // const { clearErrors } = form;
-    // const hasError = clearErrors[name];
 
     return (
         

@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import CodeIcon from '@mui/icons-material/Code';
 
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
@@ -68,8 +68,11 @@ export default function Header() {
                     <Toolbar>
                         <CodeIcon sx={{marginRight: 0.5}} />
                         <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                            Something new
+                            <Link to="/">Something new</Link>
                         </Typography>
+
+                        <NavLink to="/users">Users</NavLink>
+
                         {!isLoggedIn && (
                             <Button color="inherit" onClick={handleClickOpen}>Login</Button>
                         )}

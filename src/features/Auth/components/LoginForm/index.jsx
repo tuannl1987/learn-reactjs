@@ -16,7 +16,7 @@ LoginForm.propTypes = {
 
 function LoginForm(props) {
     const schema = yup
-                .object({
+                .object().shape({
                     identifier: yup.string().required("Please enter your email.")
                             .email("Please enter a valid email."),
 

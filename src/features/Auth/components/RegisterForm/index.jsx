@@ -16,7 +16,7 @@ RegisterForm.propTypes = {
 
 function RegisterForm(props) {
     const schema = yup
-                .object({
+                .object().shape({
                     fullName: yup.string().required("Please enter your full name.")
                             .test("should have at least two words", "Please enter at least two words", (value) => {
                                 return value.split(' ').length >=2;

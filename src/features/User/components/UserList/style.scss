@@ -1,0 +1,13 @@
+
+.user-list {
+
+    & > li {
+        cursor: pointer;
+    }
+
+    & > li.removed {
+        color: #ccc;
+        font-style: italic;
+        text-decoration: line-through;
+    }
+}
