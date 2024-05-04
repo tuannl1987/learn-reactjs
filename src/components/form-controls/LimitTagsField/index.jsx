@@ -44,23 +44,6 @@ function LimitTagsField(props) {
             )}
             sx={{ width: '500px' }}
         />
-        {/* <Controller 
-            name={name}
-            variant="outlined"
-            control={form.control}
-            render={({ field, fieldState: { error } }) => (
-                <TextField
-                  {...field}
-                  label={label}
-                  error={!!error}
-                  helperText={error ? error?.message : ''}
-                fullWidth
-                sx={{mt: 2, mb: 2}}
-                />
-              )}
-
-            disabled={disabled}
-        /> */}
         </>
     );
 }

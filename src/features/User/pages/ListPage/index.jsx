@@ -6,6 +6,7 @@ import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import UserForm from '../../components/UserForm';
 import UserTagsForm from '../../components/UserTagsForm';
+import TagsDropDown from '../../../../components/form-controls/TagsDropDown';
 
 ListPage.propTypes = {
     
@@ -122,15 +123,26 @@ function ListPage(props) {
         }
     };
 
+    // Tags Drop Down
+    const handleTagsChange = (values) => {
+        // const newUserList = [...userList];
+        if(values.length > 0) {
+            setUserList(values);
+        } else {
+            setUserList(initUserList);
+        }
+    };
+
 
     return (
         <div>
             <h3>Add User</h3>
             <UserForm onSubmit={handleUserFormSubmit} />
 
-
             <h3 className="text-3xl font-bold underline">Search User</h3>
-            <UserTagsForm userList={renderedUserList} onSubmit={handleUserTagsFormSubmit} />
+            {/* <UserTagsForm userList={renderedUserList} onSubmit={handleUserTagsFormSubmit} /> */}
+            <TagsDropDown placeholder="User Name" options={initUserList} handleTagsChange={handleTagsChange} />
+
 
             <h1 className="text-3xl font-bold underline">
                 User List

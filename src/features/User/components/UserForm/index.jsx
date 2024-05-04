@@ -33,14 +33,16 @@ function UserForm(props) {
     };
 
     return (
-        <form onSubmit={form.handleSubmit(handleSubmit)}>
-            User Form
-            <InputField name="name" label="Name" form={form} />
-            <InputField name="email" label="Email" form={form} />
-            <Button variant="contained" color="primary"  type="submit" sx={{ mt: 3, mb: 2 }} fullWidth>
-                Add
-            </Button>
-        </form>
+        <div className="max-w-fit p-2">
+            <form onSubmit={form.handleSubmit(handleSubmit)}>
+                User Form
+                <InputField name="name" label="Name" form={form} />
+                <InputField name="email" label="Email" form={form} />
+                <Button variant="contained" color="primary"  type="submit" sx={{ mt: 3, mb: 2 }} fullWidth>
+                    Add
+                </Button>
+            </form>
+        </div>
     );
 }
 
