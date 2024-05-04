@@ -56,15 +56,14 @@ function TagsDropDown(props) {
         }
         // get position
         const tagsInput = document.getElementById("tags-input");
-        const listItem = document.getElementById("list-item");
+        const optionsList = document.getElementById("options-list");
         const root = document.getElementById("root");
         if ( (tagsInput.offsetTop + window.scrollY) > root.offsetHeight / 2) {
-            listItem.style.transform = "translate(" + tagsInput.offsetLeft + "px," + 0 + "px)";
+            optionsList.style.transform = "translate(" + tagsInput.offsetLeft + "px," + 0 + "px)";
         } else {
-            const y = listItem.offsetHeight + tagsInput.offsetHeight;
-            listItem.style.transform = "translate(" + tagsInput.offsetLeft + "px, -" + y + "px)";
+            const y = optionsList.offsetHeight + tagsInput.offsetHeight;
+            optionsList.style.transform = "translate(" + tagsInput.offsetLeft + "px, -" + y + "px)";
         }
-
     };
 
     const hideOptionsList = () => {
@@ -81,6 +80,7 @@ function TagsDropDown(props) {
         }
     };
 
+    // handle when select an option
     const handleItemClick = (item) => {
         const inputId = document.getElementById("tag-input");
         inputId.value = "";
@@ -109,7 +109,7 @@ function TagsDropDown(props) {
         handleTagsChange(newChipList);
     };
 
-    const handleTagsInputClick = () => {
+    const handleClick = () => {
         toogleOptionsList();
     };
 
@@ -124,7 +124,7 @@ function TagsDropDown(props) {
             <div className="flex flex-row flex-wrap w-full relative cursor-text
                                 box-border border rounded border-solid border-gray-500
                                 pr-16 bg-white"
-                    onClick={handleTagsInputClick}
+                    onClick={handleClick}
             >
 
                 {chipList.map((chip, index) => (
@@ -182,7 +182,7 @@ function TagsDropDown(props) {
             </div>
         </div>
 
-        <ul id="list-item" className={`w-full max-w-lg overflow-scroll max-h-32 bg-slate-50 absolute z-10 ${visiable}`}>
+        <ul id="options-list" className={`w-full max-w-lg overflow-scroll max-h-32 bg-slate-50 absolute z-10 ${visiable}`}>
             {renderItemList.map((item, index) => (
                 <li 
                     key={item.id} 
