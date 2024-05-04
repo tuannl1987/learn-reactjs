@@ -46,6 +46,26 @@ function TagsDropDown(props) {
 
     };
 
+    const showOptionsList = () => {
+        // get position
+        const tagsInput = document.getElementById("tags-input");
+        const listItem = document.getElementById("list-item");
+        const root = document.getElementById("root");
+        if ( (tagsInput.offsetTop + window.scrollY) > root.offsetHeight / 2) {
+            listItem.style.transform = "translate(" + tagsInput.offsetLeft + "px," + 0 + "px)";
+        } else {
+            const y = listItem.offsetHeight + tagsInput.offsetHeight;
+            listItem.style.transform = "translate(" + tagsInput.offsetLeft + "px, -" + y + "px)";
+        }
+
+        // show
+        setVisiable('visiable');
+    };
+
+    const hideOptionsList = () => {
+        setVisiable('invisible');
+    };
+
     // check option selected
     const isSelected = (item) => {
         const equals = (a, b) => Object.keys(a).every(key => a[key] === b[key]);
@@ -56,7 +76,7 @@ function TagsDropDown(props) {
         }
     };
 
-    const handleItemClick = (item, index) => {
+    const handleItemClick = (item) => {
         const inputId = document.getElementById("tag-input");
         inputId.value = "";
         toogleItemList();
@@ -85,11 +105,29 @@ function TagsDropDown(props) {
     };
 
     const handleTagSelectClick = () => {
-        toogleItemList();
+        // toogleItemList();
+        // showOptionsList();
     };
 
     const handleTagsInputClick = () => {
-        toogleItemList();
+        window.addEventListener('click', function(event){   
+            if (document.getElementById('clickbox').contains(event.target)){
+                // Clicked in box
+                // console.log('Clicked in box');
+                if(event.target.id !== "delete-all-btn") {
+                    toogleItemList();
+                    event.preventDefault();
+                } else {
+                    setChipList([]);
+                    handleTagsChange([]);
+                    hideOptionsList();
+                }   
+            } else{
+                // Clicked outside the box
+                // console.log('Clicked outside the box');
+                hideOptionsList();
+            }
+        });
     };
 
     const handleTagsInputChange = (event) => {
@@ -97,20 +135,14 @@ function TagsDropDown(props) {
         setRenderItemList(newItemList);
     };
 
-    const handleDeleteBtnClick = () => {
-        setChipList([]);
-        handleTagsChange([]);
-        if (visiable === 'visiable') {
-            setVisiable('invisible');
-        }
-    };
-
     return (
         <>
-        <div id="tags-input" className="w-full max-w-lg flex flex-col relative mr-2 ml-2">
-            <div  className="flex flex-row flex-wrap w-full relative cursor-text
+        <div id="tags-input" className="w-full max-w-lg flex flex-col relative mr-2 ml-2" >
+            <div id="clickbox" className="flex flex-row flex-wrap w-full relative cursor-text
                                 box-border border rounded border-solid border-gray-500
-                                pr-16 bg-white">
+                                pr-16 bg-white"
+                    onClick={handleTagsInputClick}
+            >
 
                 {chipList.map((chip, index) => (
                     <div
@@ -121,7 +153,7 @@ function TagsDropDown(props) {
                         font-sans text-sm no-underline select-none appearance-none'
                     >
                         <span
-                            className='overflow-hidden text-ellipsis px-3 whitespace-nowrap'
+                            className='overflow-hidden text-ellipsis px-3 whitespace-nowrap pointer-events-none'
                         >
                             {chip.name}
                         </span>
@@ -132,7 +164,7 @@ function TagsDropDown(props) {
                             width="24" 
                             onClick={() => handleDeleteChip(chip.id, index)}
                         >
-                            <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path>
+                            <path className="pointer-events-none" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path>
                         </svg>
                     </div>
                 ))}
@@ -144,23 +176,23 @@ function TagsDropDown(props) {
                     type='text' 
                     name='tags-input' 
                     placeholder={placeholder}
-                    onClick={handleTagsInputClick} onKeyUp={handleTagsInputChange} />
+                    onKeyUp={handleTagsInputChange}
+                />
 
                 
                     <button 
-                        className="cursor-pointer absolute top-2/4 right-8 translate-x-0 -translate-y-2/4" 
-                        onClick={handleDeleteBtnClick}
+                        id="delete-all-btn"
+                        className="cursor-pointer absolute top-2/4 right-8 translate-x-0 -translate-y-2/4"
                     >
-                        <svg height="24" width="24" >
-                            <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path>
+                        <svg height="24" width="24" className="pointer-events-none" >
+                            <path className="pointer-events-none"  d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path>
                         </svg>
                     </button>
                     <button 
                         className="cursor-pointer absolute top-2/4 right-2 translate-x-0 -translate-y-2/4" 
-                        onClick={handleTagSelectClick}
                     >
-                        <svg height="24" width="24" >
-                            <path d="M7 10l5 5 5-5z"></path>
+                        <svg height="24" width="24" className="pointer-events-none" >
+                            <path className="pointer-events-none"  d="M7 10l5 5 5-5z"></path>
                         </svg>
                     </button>
                 
@@ -171,7 +203,7 @@ function TagsDropDown(props) {
             {renderItemList.map((item, index) => (
                 <li 
                     key={item.id} 
-                    onClick={() => handleItemClick(item, index)}
+                    onClick={() => handleItemClick(item)}
                     className={`cursor-pointer p-2 ${isSelected(item) ? 'bg-cyan-300' : ''}`}
                 >
                     {item.name}
