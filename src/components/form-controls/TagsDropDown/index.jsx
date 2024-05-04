@@ -48,11 +48,12 @@ function TagsDropDown(props) {
 
     // hide and show options list 
     const toogleOptionsList = () => {
-        if (visiable === 'invisible') {
-            setVisiable('visiable');
-        } else {
-            setVisiable('invisible');
-        }
+        // if (visiable === 'invisible') {
+        //     setVisiable('visiable');
+        // } else {
+        //     setVisiable('invisible');
+        // }
+        setVisiable('visiable');
         // get position
         const tagsInput = document.getElementById("tags-input");
         const optionsList = document.getElementById("options-list");
@@ -81,10 +82,12 @@ function TagsDropDown(props) {
 
     // handle when select an option
     const handleItemClick = (item) => {
+        // clear value of input, and reset options list in case typing
         const inputId = document.getElementById("tag-input");
         inputId.value = "";
-        toogleOptionsList();
         setRenderItemList(itemList);
+        // hide option list
+        hideOptionsList();
 
         const newChipList = [...chipList];
 
