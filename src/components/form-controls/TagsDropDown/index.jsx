@@ -46,22 +46,6 @@ function TagsDropDown(props) {
 
     };
 
-    const showOptionsList = () => {
-        // get position
-        const tagsInput = document.getElementById("tags-input");
-        const listItem = document.getElementById("list-item");
-        const root = document.getElementById("root");
-        if ( (tagsInput.offsetTop + window.scrollY) > root.offsetHeight / 2) {
-            listItem.style.transform = "translate(" + tagsInput.offsetLeft + "px," + 0 + "px)";
-        } else {
-            const y = listItem.offsetHeight + tagsInput.offsetHeight;
-            listItem.style.transform = "translate(" + tagsInput.offsetLeft + "px, -" + y + "px)";
-        }
-
-        // show
-        setVisiable('visiable');
-    };
-
     const hideOptionsList = () => {
         setVisiable('invisible');
     };
@@ -104,24 +88,20 @@ function TagsDropDown(props) {
         handleTagsChange(newChipList);
     };
 
-    const handleTagSelectClick = () => {
-        // toogleItemList();
-        // showOptionsList();
-    };
-
     const handleTagsInputClick = () => {
         window.addEventListener('click', function(event){   
             if (document.getElementById('clickbox').contains(event.target)){
                 // Clicked in box
                 // console.log('Clicked in box');
-                if(event.target.id !== "delete-all-btn") {
-                    toogleItemList();
-                    event.preventDefault();
-                } else {
+                if(event.target.id === "delete-all-btn") {
                     setChipList([]);
                     handleTagsChange([]);
                     hideOptionsList();
-                }   
+                    
+                } else {
+                    toogleItemList();
+                    event.preventDefault();
+                }
             } else{
                 // Clicked outside the box
                 // console.log('Clicked outside the box');
@@ -147,13 +127,13 @@ function TagsDropDown(props) {
                 {chipList.map((chip, index) => (
                     <div
                         key={chip.id}
-                        className='max-w-[calc(100% - 6px)] p-0 m-1 h-8 relative cursor-none 
+                        className='max-w-[calc(100% - 6px)] p-0 m-1 h-8 relative
                         inline-flex items-center justify-center align-middle
                         bg-gray-200 box-border border-0 rounded-2xl outline-none
                         font-sans text-sm no-underline select-none appearance-none'
                     >
                         <span
-                            className='overflow-hidden text-ellipsis px-3 whitespace-nowrap pointer-events-none'
+                            className='overflow-hidden text-ellipsis px-3 whitespace-nowrap pointer-events-none cursor-text'
                         >
                             {chip.name}
                         </span>
