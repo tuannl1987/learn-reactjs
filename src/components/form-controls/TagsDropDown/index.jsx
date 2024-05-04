@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { InsertEmoticon } from '@mui/icons-material';
 
 TagsDropDown.propTypes = {
     options: PropTypes.array.isRequired,
