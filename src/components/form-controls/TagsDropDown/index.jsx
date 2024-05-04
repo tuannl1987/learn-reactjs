@@ -89,7 +89,7 @@ function TagsDropDown(props) {
     };
 
     const handleTagsInputClick = () => {
-        window.addEventListener('click', function(event){   
+        window.addEventListener('click', function handleClickOut(event){   
             if (document.getElementById('clickbox').contains(event.target)){
                 // Clicked in box
                 // console.log('Clicked in box');
@@ -106,6 +106,7 @@ function TagsDropDown(props) {
                 // Clicked outside the box
                 // console.log('Clicked outside the box');
                 hideOptionsList();
+                this.window.removeEventListener('click', handleClickOut, false);
             }
         });
     };
