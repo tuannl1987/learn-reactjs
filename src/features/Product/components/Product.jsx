@@ -11,7 +11,14 @@ function Product(props) {
     const { product } = props;
     return (
         <Box padding={1}>
-            <Skeleton variant="rectangular" width="100%" height={118} />
+            <Box padding={1}>
+                <img
+                    src='https://api.ezfrontend.com/uploads/9ff7d29c2ebad4fd802685eb770d9452_417240087a.jpg'
+                    alt={product.name}
+                    width='100%'
+                />
+            </Box>
+
             <Typography variant='body2'>{product.name}</Typography>
             <Typography variant='body2'>{product.salePrice} - {product.promotionPercent}</Typography>
         </Box>

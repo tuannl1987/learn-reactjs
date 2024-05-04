@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { InsertEmoticon } from '@mui/icons-material';
 
@@ -26,8 +26,29 @@ function TagsDropDown(props) {
 
     const [renderItemList, setRenderItemList] = useState(itemList);
 
+    const tagsBoxRef = useRef(null);
+
+    // check if click out site
+    useEffect(() => {
+      const handleClickOutSite = (e) => {
+           if (tagsBoxRef.current && !tagsBoxRef.current.contains(e.target)) {
+                // Clicked outside the box
+                hideOptionsList();
+           } else {
+                // Clicked in box
+                if(e.target.id === "delete-all-btn") {
+                    setChipList([]);
+                    handleTagsChange([]);
+                    hideOptionsList();
+                }
+           }
+      };
+      document.addEventListener('click', handleClickOutSite);
+      return () => document.removeEventListener('click', handleClickOutSite);
+    }, [tagsBoxRef])
+
     // hide and show options list 
-    const toogleItemList = () => {
+    const toogleOptionsList = () => {
         if (visiable === 'invisible') {
             setVisiable('visiable');
         } else {
@@ -63,7 +84,7 @@ function TagsDropDown(props) {
     const handleItemClick = (item) => {
         const inputId = document.getElementById("tag-input");
         inputId.value = "";
-        toogleItemList();
+        toogleOptionsList();
         setRenderItemList(itemList);
 
         const newChipList = [...chipList];
@@ -89,26 +110,7 @@ function TagsDropDown(props) {
     };
 
     const handleTagsInputClick = () => {
-        window.addEventListener('click', function handleClickOut(event){   
-            if (document.getElementById('clickbox').contains(event.target)){
-                // Clicked in box
-                // console.log('Clicked in box');
-                if(event.target.id === "delete-all-btn") {
-                    setChipList([]);
-                    handleTagsChange([]);
-                    hideOptionsList();
-                    
-                } else {
-                    toogleItemList();
-                    event.preventDefault();
-                }
-            } else{
-                // Clicked outside the box
-                // console.log('Clicked outside the box');
-                hideOptionsList();
-                this.window.removeEventListener('click', handleClickOut, false);
-            }
-        });
+        toogleOptionsList();
     };
 
     const handleTagsInputChange = (event) => {
@@ -118,8 +120,8 @@ function TagsDropDown(props) {
 
     return (
         <>
-        <div id="tags-input" className="w-full max-w-lg flex flex-col relative mr-2 ml-2" >
-            <div id="clickbox" className="flex flex-row flex-wrap w-full relative cursor-text
+        <div id="tags-input" className="w-full max-w-lg flex flex-col relative mr-2 ml-2" ref={tagsBoxRef} >
+            <div className="flex flex-row flex-wrap w-full relative cursor-text
                                 box-border border rounded border-solid border-gray-500
                                 pr-16 bg-white"
                     onClick={handleTagsInputClick}
@@ -140,7 +142,7 @@ function TagsDropDown(props) {
                         </span>
 
                         <svg 
-                            className="cursor-pointer mt-0 mr-1.5 mb-0 -ml-1.5" 
+                            className="cursor-pointer mt-0 mr-1.5 mb-0 -ml-1.5 text-gray-200" 
                             height="24" 
                             width="24" 
                             onClick={() => handleDeleteChip(chip.id, index)}
