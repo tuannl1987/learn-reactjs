@@ -7,6 +7,7 @@ import queryString from 'query-string';
 import UserForm from '../../components/UserForm';
 import UserTagsForm from '../../components/UserTagsForm';
 import TagsDropDown from '../../../../components/form-controls/TagsDropDown';
+import TagsDropDown2 from '../../../../components/form-controls/TagsDropDown2';
 
 ListPage.propTypes = {
     
@@ -141,8 +142,8 @@ function ListPage(props) {
 
             <h3 className="text-3xl font-bold underline">Search User</h3>
             {/* <UserTagsForm userList={renderedUserList} onSubmit={handleUserTagsFormSubmit} /> */}
-            <TagsDropDown placeholder="User Name" options={initUserList} handleTagsChange={handleTagsChange} />
-
+            {/* <TagsDropDown placeholder="User Name" options={initUserList} handleTagsChange={handleTagsChange} /> */}
+            <TagsDropDown2 optionsList={initUserList} handleTagsChange={handleTagsChange} placeHolder='User Name' />
 
             <h1 className="text-3xl font-bold underline">
                 User List
