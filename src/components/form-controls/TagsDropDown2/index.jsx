@@ -3,18 +3,16 @@ import PropTypes from 'prop-types';
 
 TagsDropDown2.propTypes = {
     optionsList: PropTypes.array.isRequired,
-    handleTagsChange: PropTypes.func,
 
     placeHolder: PropTypes.string,
 };
 
 TagsDropDown2.defaultProps = {
-    handleTagsChange: null,
     placeHolder: '',
 };
 
 function TagsDropDown2(props) {
-    const { optionsList, handleTagsChange, placeHolder } = props;
+    const { optionsList, placeHolder } = props;
 
     const [value, setValue] = useState('');
     const [isOpen, setIsOpen] = useState(false);
@@ -77,7 +75,6 @@ function TagsDropDown2(props) {
             newList.push(option);
         }
         setTagsList(newList);
-
     };
 
     // handle on delete one tag
