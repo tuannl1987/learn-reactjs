@@ -13,6 +13,7 @@ function ProductFeature(props) {
         <Box pt={4}>
             <Routes>
                 <Route path="/" Component={ListPage} />
+                <Route path="/*" Component={ListPage} />
             </Routes>
         </Box>
     );

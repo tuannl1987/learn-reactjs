@@ -71,7 +71,8 @@ export default function Header() {
                             <Link to="/">Something new</Link>
                         </Typography>
 
-                        <NavLink to="/users">Users</NavLink>
+                        <NavLink to="/users" className="m-1 p-1">Users</NavLink>
+                        <NavLink to="/products" className="m-1 p-1">Products</NavLink>
 
                         {!isLoggedIn && (
                             <Button color="inherit" onClick={handleClickOpen}>Login</Button>

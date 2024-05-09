@@ -12,7 +12,7 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<>Home page</>} exact/>
-        <Route path='/users/*' Component={UserFeature} />
+        <Route path='users/*' element={<UserFeature />} />
         <Route path='/products/*' Component={ProductFeature} />
         <Route path='/*' Component={NotFound} />
       </Routes>
