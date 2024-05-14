@@ -42,25 +42,25 @@ function PasswordField(props) {
                 control={form.control}
                 render={({ field, fieldState: { error } }) => (
                     <>
-                    <OutlinedInput
-                        {...field}
-                        id={name}
-                        type={showPassword ? 'text' : 'password'}
-                        endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={toggleShowPassword}
-                            edge="end"
-                            >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                        }
-                        label={label}
-                        error={!!error}
-                    />
-                    <FormHelperText error={!!error}>{error?.message}</FormHelperText>
+                        <OutlinedInput
+                            {...field}
+                            id={name}
+                            type={showPassword ? 'text' : 'password'}
+                            endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={toggleShowPassword}
+                                edge="end"
+                                >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                            }
+                            label={label}
+                            error={!!error}
+                        />
+                        <FormHelperText error={!!error}>{error?.message}</FormHelperText>
                     </>
                 )}
 

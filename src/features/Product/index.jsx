@@ -15,7 +15,7 @@ function ProductFeature(props) {
             <Routes>
                 <Route path="/" Component={ListPage} />
                 <Route path="/*" Component={ListPage} />
-                <Route path="/:productId" Component={DetailPage} />
+                <Route path="/:productId/*" Component={DetailPage} />
             </Routes>
         </Box>
     );

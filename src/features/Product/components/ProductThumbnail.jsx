@@ -7,8 +7,7 @@ ProductThumbnail.propTypes = {
     product: PropTypes.object,
 };
 
-function ProductThumbnail(props) {
-    const {product} = props;
+function ProductThumbnail({product = {}}) {
     const thumbnailUrl = product.thumbnail
         ? `${STATIC_HOST}${product.thumbnail?.url}`
         : `${THUMBNAIL_PLACEHOLDER}`;

@@ -19,21 +19,22 @@ function InputField(props) {
         
         <Controller 
             name={name}
-            variant="outlined"
             control={form.control}
-            render={({ field, fieldState: { error } }) => (
+            render={({ field, fieldState: { error }, disabled, name}) => (
                 <TextField
-                  {...field}
-                  label={label}
-                  error={!!error}
-                  helperText={error ? error?.message : ''}
-                fullWidth
-                sx={{mt: 2, mb: 2}}
-                
+                    {...field}
+                    label={label}
+                    error={!!error}
+                    helperText={error ? error?.message : ''}
+                    fullWidth
+                    sx={{mt: 2, mb: 2}}
+                    disabled={disabled}
+                    variant="outlined"
+                    name={name}
                 />
               )}
 
-            disabled={disabled}
+            
         />
     );
 }
