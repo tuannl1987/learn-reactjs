@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Paper } from '@mui/material';
+import { Box, Container, Grid, LinearProgress, Paper } from '@mui/material';
 import React, { useState } from 'react';
 import { useLocation, useParams, Route, Routes } from 'react-router-dom';
 import ProductThumbnail from '../components/ProductThumbnail';
@@ -32,7 +32,9 @@ function DetailPage(props) {
 
     if(loading) {
         return (
-            <Box>Loading</Box>
+            <Box className='fixed top-0 left-0 w-full'>
+                <LinearProgress />
+            </Box>
         )
     };
 
