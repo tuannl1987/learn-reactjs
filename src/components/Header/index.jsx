@@ -1,29 +1,27 @@
-import * as React from 'react';
+import CodeIcon from '@mui/icons-material/Code';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import CodeIcon from '@mui/icons-material/Code';
+import * as React from 'react';
 
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
-import { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Register from '../../features/Auth/components/Register';
-import { IconButton } from '@mui/material';
 import { AccountCircle, Close } from '@mui/icons-material';
-import Login from '../../features/Auth/components/Login';
+import { Badge, IconButton } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Login from '../../features/Auth/components/Login';
+import Register from '../../features/Auth/components/Register';
 
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { logout } from '../../features/Auth/userSlice';
+import { cartItemsCountSelector } from '../../features/Cart/selectors';
 
 const MODE = {
     LOGIN: 'login',
@@ -36,6 +34,9 @@ export default function Header() {
     const [mode, setMode] = useState(MODE.LOGIN);
     const loggedInUser = useSelector(state => state.user.current);
     const isLoggedIn = !!loggedInUser.id;
+    const navigate = useNavigate();
+
+    const cartItemsCount = useSelector(cartItemsCountSelector);
 
     // menu
     const [anchorEl, setAnchorEl] = useState(null);
@@ -50,6 +51,10 @@ export default function Header() {
         const action = logout();
         dispatch(action);
         setAnchorEl(null);
+    };
+
+    const handleCartClick = () => {
+        navigate('/cart');
     };
 
     // dialog click
@@ -73,6 +78,12 @@ export default function Header() {
 
                         <NavLink to="/users" className="m-1 p-1">Users</NavLink>
                         <NavLink to="/products" className="m-1 p-1">Products</NavLink>
+
+                        <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={handleCartClick} >
+                            <Badge badgeContent={cartItemsCount} color="error">
+                                <ShoppingCartIcon />
+                            </Badge>
+                        </IconButton>
 
                         {!isLoggedIn && (
                             <Button color="inherit" onClick={handleClickOpen}>Login</Button>

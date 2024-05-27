@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 TagsDropDown2.propTypes = {
     optionsList: PropTypes.array.isRequired,
+    handleTagsChange: PropTypes.func,
 
     placeHolder: PropTypes.string,
 };
@@ -12,7 +13,7 @@ TagsDropDown2.defaultProps = {
 };
 
 function TagsDropDown2(props) {
-    const { optionsList, placeHolder } = props;
+    const { optionsList, placeHolder, handleTagsChange } = props;
 
     const [value, setValue] = useState('');
     const [isOpen, setIsOpen] = useState(false);
@@ -37,6 +38,12 @@ function TagsDropDown2(props) {
         document.removeEventListener('click', handleClickOutSite);
       }
     }, [tagsDropDown])
+
+    useEffect(() => {
+        if (!handleTagsChange) return;
+        // console.log('tagsList', tagsList);
+        handleTagsChange(tagsList);
+    }, [tagsList])
     
     // handle dropdown click
     const handleOnClick = () => {
@@ -67,10 +74,9 @@ function TagsDropDown2(props) {
         setFilterList(optionsList);
 
         // check option existed to remove or add into list
-        const newList = [...tagsList];
+        var newList = [...tagsList];
         if (newList.some(_item => equals(_item, option))) {
-            const pos = newList.map(e => e.id).indexOf(option.id);
-            newList.splice(pos, 1);
+            newList = tagsList.filter(tag => tag.id !== option.id);
         } else {
             newList.push(option);
         }
@@ -78,9 +84,8 @@ function TagsDropDown2(props) {
     };
 
     // handle on delete one tag
-    const handleOnDeleteTag = (tag, index) => {
-        const newList = [...tagsList];
-        newList.splice(index, 1);
+    const handleOnDeleteTag = (tagId) => {
+        const newList = tagsList.filter(tag => tag.id !== tagId);
         setTagsList(newList);
     };
 
@@ -92,7 +97,7 @@ function TagsDropDown2(props) {
                             pr-16 bg-white'
                 onClick={handleOnClick}>
                 
-                {tagsList.map((tag, index) => (
+                {tagsList.map((tag) => (
                     <div
                         key={tag.id}
                         className='relative max-w-[calc(100% - 6px)]
@@ -108,7 +113,7 @@ function TagsDropDown2(props) {
                         </span>
                         <div
                             className='cursor-pointer text-blue-800 font-bold -mt-2 mr-1.5 mb-0 -ml-1.5 h-3 w-3'
-                            onClick={() => handleOnDeleteTag(tag, index)}
+                            onClick={() => handleOnDeleteTag(tag.id)}
                         >
                             X
                         </div>

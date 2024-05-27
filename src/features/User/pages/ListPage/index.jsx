@@ -37,7 +37,7 @@ function ListPage(props) {
 
     const location = useLocation();
     const navigate = useNavigate();
-    const [userList, setUserList] = useState(initUserList);
+    const [userList, setUserList] = useState([...initUserList]);
     const [filteredStatus, setFilteredStatus] = useState(() => {
         const params = queryString.parse(location.search);
         return params.status || 'all';
@@ -117,22 +117,20 @@ function ListPage(props) {
     // User Tags Form
     const handleUserTagsFormSubmit = (values) => {
         // console.log("handleUserTagsFormSubmit", values);
-        if(values.length > 0) {
-            setUserList(values);
-        } else {
-            setUserList(initUserList);
-        }
+        // if(values.length > 0) {
+        //     setUserList(values);
+        // } else {
+        //     setUserList(initUserList);
+        // }
     };
 
     // Tags Drop Down
     const handleTagsChange = (values) => {
-        // const newUserList = [...userList];
-        if(values.length > 0) {
-            setUserList(values);
-        } else {
-            setUserList(initUserList);
-        }
-    };
+        // var newUserList = [...values];
+        // if(values.length > 0) {
+        //     setUserList(newUserList);
+        // }
+    }
 
 
     return (

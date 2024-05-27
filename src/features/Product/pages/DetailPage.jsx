@@ -9,6 +9,8 @@ import ProductMenu from '../components/ProductMenu';
 import ProductDescription from '../components/ProductDescription';
 import ProductAdditional from '../components/ProductAdditional';
 import ProductReview from '../components/ProductReview';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../Cart/cartSlice';
 
 DetailPage.propTypes = {
     
@@ -29,6 +31,9 @@ function DetailPage(props) {
         setPathname(newPathName);
     }
 
+    // call Redux
+    const dispatch = useDispatch();
+
 
     if(loading) {
         return (
@@ -40,6 +45,13 @@ function DetailPage(props) {
 
     const handleAddToCartSubmit = (formValues) => {
         console.log("handleAddToCartSubmit", formValues);
+        const action = addToCart({
+            id: product.id,
+            product: product,
+            quantity: formValues.quantity,
+        });
+        dispatch(action);
+
     };
 
     return (
